@@ -69,6 +69,47 @@
 
             }
 
+            .active {
+
+                background-color: aliceblue;
+
+            }
+
+            .highlightedButton {
+
+                background-color: lightgrey;
+
+            }
+
+            textarea {
+
+                width: 50%;
+                resize: none;
+                border-top: none;
+                border-bottom: none;
+                border-color: lightgrey;
+
+            }
+
+            .panel {
+
+                float: left;
+                width: 50%;
+
+            }
+
+            iframe {
+
+                border: none;
+
+            }
+
+            .hidden {
+
+                display: none;
+
+            }
+
 
         </style>
 
@@ -86,17 +127,70 @@
 
             <div id="buttonContainer">
 
-                <div class="toggleButton" id="html">HTML</div>
+                <div class="toggleButton active" id="html">HTML</div>
 
                 <div class="toggleButton" id="css">CSS</div>
 
                 <div class="toggleButton" id="javascript">JavaScript</div>
 
-                <div class="toggleButton" id="output">Output</div>
+                <div class="toggleButton active" id="output">Output</div>
 
             </div>
 
         </div>
+
+        <div id="bodyContainer">
+
+            <textarea id="htmlPanel" class="panel">Hello world!</textarea>
+
+            <textarea id="cssPanel" class="panel hidden">p color: green;</textarea>
+
+            <textarea id="javascriptPanel" class="panel hidden">alert("Hi there!");</textarea>
+
+            <iframe id="outputPanel" class="panel"></iframe>
+
+
+        </div>
+
+        <script type="text/javascript">
+
+            $(".toggleButton").hover(function() {
+
+                $(this).addClass("highlightedButton");
+
+            }, function() {
+
+                $(this).removeClass("highlightedButton");
+
+            });
+
+            $(".toggleButton").click(function() {
+
+                $(this).toggleClass("active");
+
+                $(this).removeClass("highlightedButton");
+
+                var panelID = $(this).attr("id") + "Panel";
+
+                $("#" + panelID).toggle();
+
+                $(".panel").width(($(window).width() / 2) - 5);
+
+            });
+
+            $(".panel").height($(window).height() - $("#header").height() - 20);
+
+            $(".panel").width(($(window).width() / 2) - 5);
+
+            $("iframe").contents().find("html").html($("#htmlPanel").val());
+
+            $("textarea").on('change keyup paste', function() {
+
+                $("iframe").contents().find("html").html($("#htmlPanel").val());
+
+            });
+
+        </script>
 
     </body>
 
